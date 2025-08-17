@@ -1,3 +1,11 @@
 {
-  test: "Hello world!"
+    plugins: [
+        {
+            name: "blank",
+            path: "blank-plugin.js",
+            config: {
+                hello: "world"
+            }
+        }
+    ]
 }
