@@ -6,8 +6,8 @@ let db = {};
 let plugins = {
   "core": {
     "plugin": {
-      updateEntry: (config, runApi, ...args) => updateEntry(...args),
-      getEntry: (config, runApi, ...args) => getEntry(...args),
+      update: (config, runApi, ...args) => update(...args),
+      get: (config, runApi, ...args) => get(...args),
     },
     config: {},
   }
@@ -26,9 +26,9 @@ async function initialize() {
   if (config.get("verbose")) console.log("[core] Database initialization complete");
 }
 
-// for updateEntry, we give plugins the opportunity to modify the entry specifically
+// for update, we give plugins the opportunity to modify the entry specifically
 // inside of onBeforeUpdate
-async function updateEntry(id, data) {
+async function update(id, data) {
   if (config.get("verbose")) console.log(`[core] Updating entry: ${id}`);
 
   let updatedValue = await _runPlugins("onBeforeUpdate", id, data);
@@ -46,16 +46,16 @@ async function updateEntry(id, data) {
   if (config.get("verbose")) console.log(`[core] Entry updated: ${id}`);
 }
 
-// for getEntry, we allow plugins to modify the entry in turn
-async function getEntry(id) {
+// for get, we allow plugins to modify the entry in turn
+async function get(id) {
   if (config.get("verbose")) console.log(`[core] Getting entry: ${id}`);
 
   let entry = db[id];
 
   if (config.get("verbose")) console.log(`[core] Running get entry plugins for: ${id}`);
-  entry = await _runPlugins("onBeforeGetEntry", id, entry);
-  entry = await _runPlugins("onGetEntry", id, entry);
-  entry = await _runPlugins("onAfterGetEntry", id, entry);
+  entry = await _runPlugins("onBeforeGet", id, entry);
+  entry = await _runPlugins("onGet", id, entry);
+  entry = await _runPlugins("onAfterGet", id, entry);
 
   if (config.get("verbose")) console.log(`[core] Entry retrieved: ${id}`);
   return entry;

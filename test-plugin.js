@@ -5,18 +5,18 @@ export {
   onInitialize,
   onAfterInitialize,
 
-  onBeforeUpdateEntry,
-  onUpdateEntry,
-  onAfterUpdateEntry,
+  onBeforeUpdate,
+  onUpdate,
+  onAfterUpdate,
 
-  onBeforeGetEntry,
-  onGetEntry,
-  onAfterGetEntry,
+  onBeforeGet,
+  onGet,
+  onAfterGet,
 }
 
 async function onBeforeInitialize(config, runApi) {
   console.log('onBeforeInitialize');
-  await runApi("core/getEntry", "123");
+  await runApi("core/get", "123");
 }
 
 async function onInitialize(config, runApi) {
@@ -27,26 +27,26 @@ async function onAfterInitialize(config, runApi) {
   console.log("onAfterInitialize");
 }
 
-async function onBeforeUpdateEntry(config, runApi, id, data) {
-  console.log("onBeforeUpdateEntry");
+async function onBeforeUpdate(config, runApi, id, data) {
+  console.log("onBeforeUpdate");
 }
 
-async function onUpdateEntry(config, runApi, id, data) {
-  console.log("onUpdateEntry");
+async function onUpdate(config, runApi, id, data) {
+  console.log("onUpdate");
 }
 
-async function onAfterUpdateEntry(config, runApi, id, data) {
-  console.log("onAfterUpdateEntry");
+async function onAfterUpdate(config, runApi, id, data) {
+  console.log("onAfterUpdate");
 }
 
-async function onBeforeGetEntry(config, runApi, id) {
-  console.log("onBeforeGetEntry");
+async function onBeforeGet(config, runApi, id) {
+  console.log("onBeforeGet");
 }
 
-async function onGetEntry(config, runApi, id) {
-  console.log("onGetEntry");
+async function onGet(config, runApi, id) {
+  console.log("onGet");
 }
 
-async function onAfterGetEntry(config, runApi, id) {
-  console.log("onAfterGetEntry");
+async function onAfterGet(config, runApi, id) {
+  console.log("onAfterGet");
 }
