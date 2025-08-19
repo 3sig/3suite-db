@@ -43,7 +43,7 @@ async function update(id, data) {
   await _runPlugins("onUpdate", id, data);
   await _runPlugins("onAfterUpdate", id, data);
 
-  if (config.get("verbose")) console.log(`[core] Entry updated: ${id}`);
+  if (config.get("verbose")) console.log(`[core] Entry updated: ${id}`, data);
 }
 
 // for get, we allow plugins to modify the entry in turn
@@ -57,7 +57,7 @@ async function get(id) {
   entry = await _runPlugins("onGet", id, entry);
   entry = await _runPlugins("onAfterGet", id, entry);
 
-  if (config.get("verbose")) console.log(`[core] Entry retrieved: ${id}`);
+  if (config.get("verbose")) console.log(`[core] Entry retrieved: ${id}`, entry);
   return entry;
 }
 
