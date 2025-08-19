@@ -53,9 +53,9 @@ async function get(id) {
   let entry = db[id];
 
   if (config.get("verbose")) console.log(`[core] Running get entry plugins for: ${id}`);
-  entry = await _runPlugins("onBeforeGet", id, entry);
-  entry = await _runPlugins("onGet", id, entry);
-  entry = await _runPlugins("onAfterGet", id, entry);
+  entry = await _runPluginsGet("onBeforeGet", id, entry);
+  entry = await _runPluginsGet("onGet", id, entry);
+  entry = await _runPluginsGet("onAfterGet", id, entry);
 
   if (config.get("verbose")) console.log(`[core] Entry retrieved: ${id}`, entry);
   return entry;
@@ -81,12 +81,28 @@ async function _runPlugins(pluginFunctionType, ...args) {
   for (const plugin of Object.values(plugins)) {
     let pluginFunction = plugin.plugin[pluginFunctionType];
     if (pluginFunction) {
-      if (config.get("verbose")) console.log(`[core] Executing plugin function: ${pluginFunctionType}`);
+      if (config.get("verbose")) console.log(`[core] Executing plugin ${plugin.name} function: ${pluginFunctionType}`);
       await pluginFunction(plugin.config, runApi, ...args);
     }
   }
 
   if (config.get("verbose")) console.log(`[core] Completed plugins for: ${pluginFunctionType}`);
+}
+
+async function _runPluginsGet(pluginFunctionType, id, entry) {
+  if (config.get("verbose")) console.log(`[core] Running plugins get for ${id} of type ${pluginFunctionType}`);
+
+  for (const plugin of Object.values(plugins)) {
+    let pluginFunction = plugin.plugin[pluginFunctionType];
+    if (pluginFunction) {
+      if (config.get("verbose")) console.log(`[core] Executing plugin ${plugin.name} get with value ${entry}`);
+      entry = await pluginFunction(plugin.config, runApi, id, entry);
+    }
+  }
+
+  if (config.get("verbose")) console.log(`[core] Completed plugins get for ${id} of type ${pluginFunctionType}`);
+
+  return entry;
 }
 
 async function _loadPlugins() {
