@@ -113,7 +113,7 @@ async function _loadPlugins() {
     if (config.get("verbose")) console.log(`[core] Loading plugin: ${configPlugin.name} from ${configPlugin.path}`);
 
     const plugin = await import("./" + configPlugin.path);
-    plugins[configPlugin.name] = { plugin, config: configPlugin.config };
+    plugins[configPlugin.name] = { plugin, config: configPlugin.config, verbose: config.get("verbose") };
 
     if (config.get("verbose")) console.log(`[core] Plugin loaded: ${configPlugin.name}`);
   }
